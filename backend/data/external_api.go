@@ -35,9 +35,9 @@ type FinancialData struct {
 }
 
 // FetchFinancialData récupère les données financières depuis une API externe
-func FetchFinancialData(apiKey string) ([]FinancialData, error) {
+func FetchFinancialData(apiKey, symbol string) ([]FinancialData, error) {
 
-	apiURL := fmt.Sprintf("https://financialmodelingprep.com/api/v3/income-statement/AAPL?limit=120&apikey=%s", apiKey)
+	apiURL := fmt.Sprintf("https://financialmodelingprep.com/api/v3/income-statement/%s?limit=120&apikey=%s", symbol, apiKey)
 
 	// requête GET à l'API pour récupérer les données
 	resp, err := http.Get(apiURL)

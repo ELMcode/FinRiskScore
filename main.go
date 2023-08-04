@@ -2,6 +2,7 @@ package main
 
 import (
 	"FinRiskScore/backend/api"
+	"fmt"
 	"net/http"
 )
 
@@ -13,5 +14,8 @@ func main() {
 	http.Handle("/", r)
 
 	// Démarrage serveur HTTP port 8080
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		fmt.Println("Erreur lors du démarrage du serveur:", err)
+	}
 }

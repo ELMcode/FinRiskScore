@@ -8,17 +8,17 @@ import (
 )
 
 func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := "XXX"
+	apiKey := "051a81835513220504d1199f85822b5b"
 
-	// Obtient le symbole de l'entreprise à partir des variables de requête
+	// Recup le symbole de l'entreprise à partir des variables de requête
 	symbol := r.URL.Query().Get("symbol")
 
 	if symbol == "" {
-		http.Error(w, "Veuillez fournir le symbole de l'entreprise via le paramètre 'symbol'", http.StatusBadRequest)
+		http.Error(w, "Veuillez fournir le symbole de l'entreprise via le paramètre 'symbol'\nExemple : http://localhost:8080/calculate-risk-score?symbol=?", http.StatusBadRequest)
 		return
 	}
 
-	// Récupère les données financières pour le symbole d'entreprise spécifié
+	// Récupère les données financières du symbole d'entreprise spécifié
 	financialData, err := data.FetchFinancialData(apiKey, symbol)
 	if err != nil {
 		http.Error(w, "Erreur lors de la récupération des données", http.StatusInternalServerError)

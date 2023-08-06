@@ -2,23 +2,28 @@ package handlers
 
 import (
 	"FinRiskScore/backend/algorithm"
+	"FinRiskScore/backend/api/validators"
 	"FinRiskScore/backend/data"
 	"fmt"
 	"net/http"
 )
 
 func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := "051a81835513220504d1199f85822b5b"
+	apiKey := "XXX"
 
-	// Recup le symbole de l'entreprise à partir des variables de requête
+	// Obtient le symbole de l'entreprise à partir des variables de requête
 	symbol := r.URL.Query().Get("symbol")
 
-	if symbol == "" {
-		http.Error(w, "Veuillez fournir le symbole de l'entreprise via le paramètre 'symbol'\nExemple : http://localhost:8080/calculate-risk-score?symbol=?", http.StatusBadRequest)
+	// Crée une instance de CalculateRiskScoreParams avec le symbole
+	params := validators.CalculateRiskScoreParams{Symbol: symbol}
+
+	// Valide les paramètres de la requête
+	if err := validators.ValidateCalculateRiskScoreParams(params); err != nil {
+		http.Error(w, "Paramètres de requête invalides : paramètre 'symbol' manquant.\nExemple : http://localhost:8080/calculate-risk-score?symbol=GOOGL", http.StatusBadRequest)
 		return
 	}
 
-	// Récupère les données financières du symbole d'entreprise spécifié
+	// Récupère les données financières pour le symbole d'entreprise spécifié
 	financialData, err := data.FetchFinancialData(apiKey, symbol)
 	if err != nil {
 		http.Error(w, "Erreur lors de la récupération des données", http.StatusInternalServerError)

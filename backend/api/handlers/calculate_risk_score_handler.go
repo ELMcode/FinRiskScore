@@ -3,13 +3,14 @@ package handlers
 import (
 	"FinRiskScore/backend/algorithm"
 	"FinRiskScore/backend/api/validators"
+	"FinRiskScore/backend/config"
 	"FinRiskScore/backend/data"
 	"fmt"
 	"net/http"
 )
 
 func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := "XXX"
+	apiKey := config.APIKey
 
 	// Obtient le symbole de l'entreprise à partir des variables de requête
 	symbol := r.URL.Query().Get("symbol")

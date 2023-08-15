@@ -46,8 +46,8 @@ type CompanyDescription struct {
 	IsFund            bool    `json:"isFund"`
 }
 
-// FetchCompanyDescriptions Fonction pour récupérer les descriptions de l'API externe
-func FetchCompanyDescriptions(apiKey, symbol string) ([]CompanyDescription, error) {
+// FetchCompanyDescription Fonction pour récupérer les descriptions de l'API externe
+func FetchCompanyDescription(apiKey, symbol string) ([]CompanyDescription, error) {
 
 	// Construction de l'URL avec le symbole
 	apiURL := fmt.Sprintf("https://financialmodelingprep.com/api/v3/profile/%s?apikey=%s", symbol, apiKey)

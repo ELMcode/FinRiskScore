@@ -13,6 +13,17 @@ import (
 type Response struct {
 	Symbol    string  `json:"symbol"`
 	RiskScore float64 `json:"riskScore"`
+
+	CompanyName       string  `json:"companyName"`
+	Industry          string  `json:"industry"`
+	FullTimeEmployees string  `json:"fullTimeEmployees"`
+	Description       string  `json:"description"`
+	Price             float64 `json:"price"`
+	Changes           float64 `json:"changes"`
+	Website           string  `json:"website"`
+	Image             string  `json:"image"`
+	Exchange          string  `json:"exchange"`
+	IsActivelyTrading bool    `json:"isActivelyTrading"`
 }
 
 func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
@@ -41,12 +52,30 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 
 	riskScore := algorithm.CalculateRiskScore(financialData)
 
+	description, err := data.FetchCompanyDescription(apiKey, symbol)
+	if err != nil {
+		http.Error(w, "Error fetching description", http.StatusInternalServerError)
+		return
+	}
+
 	resp := Response{
 		Symbol:    symbol,
 		RiskScore: riskScore,
+
+		CompanyName:       description[0].CompanyName,
+		Industry:          description[0].Industry,
+		FullTimeEmployees: description[0].FullTimeEmployees,
+		Description:       description[0].Description,
+		Price:             description[0].Price,
+		Changes:           description[0].Changes,
+		Website:           description[0].Website,
+		Image:             description[0].Image,
+		Exchange:          description[0].Exchange,
+		IsActivelyTrading: description[0].IsActivelyTrading,
 	}
 
 	jsonResp, err := json.Marshal(resp)
+
 	if err != nil {
 		http.Error(w, "Error encoding response", http.StatusInternalServerError)
 		return

@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import './assets/base.css'
 
-// Importer createVuetify
+
 import { createVuetify } from 'vuetify'
+import 'vuetify/styles'
 
 const vuetify = createVuetify()
 

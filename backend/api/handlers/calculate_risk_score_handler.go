@@ -19,10 +19,10 @@ type Response struct {
 	FullTimeEmployees string  `json:"fullTimeEmployees"`
 	Description       string  `json:"description"`
 	Price             float64 `json:"price"`
-	Changes           float64 `json:"changes"`
 	Website           string  `json:"website"`
 	Image             string  `json:"image"`
 	Exchange          string  `json:"exchange"`
+	Changes           float64 `json:"changes"`
 	IsActivelyTrading bool    `json:"isActivelyTrading"`
 }
 
@@ -67,10 +67,10 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 		FullTimeEmployees: description[0].FullTimeEmployees,
 		Description:       description[0].Description,
 		Price:             description[0].Price,
-		Changes:           description[0].Changes,
 		Website:           description[0].Website,
 		Image:             description[0].Image,
 		Exchange:          description[0].Exchange,
+		Changes:           description[0].Changes,
 		IsActivelyTrading: description[0].IsActivelyTrading,
 	}
 

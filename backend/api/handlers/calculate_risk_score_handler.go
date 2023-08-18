@@ -1,3 +1,4 @@
+// calculate_risk_score_handler.go
 package handlers
 
 import (
@@ -51,6 +52,7 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	riskScore := algorithm.CalculateRiskScore(financialData)
+	formattedRiskScore := float64(int(riskScore*100)) / 100
 
 	description, err := data.FetchCompanyDescription(apiKey, symbol)
 	if err != nil {
@@ -60,7 +62,7 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp := Response{
 		Symbol:    symbol,
-		RiskScore: riskScore,
+		RiskScore: formattedRiskScore,
 
 		CompanyName:       description[0].CompanyName,
 		Industry:          description[0].Industry,

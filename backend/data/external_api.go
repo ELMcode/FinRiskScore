@@ -6,7 +6,7 @@ import (
 	"net/http"      // Package pour effectuer des requêtes HTTP
 )
 
-// FinancialData représente les données financières reçues depuis l'API.
+// FinancialData sert de modèle pour mapper les données financières reçues depuis l'API externe pr la réponse JSON
 type FinancialData struct {
 	Date                                    string  `json:"date"`
 	Symbol                                  string  `json:"symbol"`

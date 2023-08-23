@@ -3,6 +3,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"math"
 	"net/http"
 
 	"FinRiskScore/backend/algorithm"
@@ -38,6 +39,7 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 	symbol := r.URL.Query().Get("symbol")
 
 	// Valide les paramètres de calcul du score de risque financier
+	// Si param valides, la fonction de validation validators.ValidateCalculateRiskScoreParams() renvoie nil.
 	params := validators.CalculateRiskScoreParams{Symbol: symbol}
 	if err := validators.ValidateCalculateRiskScoreParams(params); err != nil {
 		http.Error(w, "Invalid params", http.StatusBadRequest)
@@ -60,7 +62,7 @@ func CalculateRiskScoreHandler(w http.ResponseWriter, r *http.Request) {
 	// Utilise le calcul du score de risque financier du dossier algorithm
 	riskScore := algorithm.CalculateRiskScore(financialData)
 	// limite à 2 décimales le résultat du risque financier
-	formattedRiskScore := float64(int(riskScore*100)) / 100
+	formattedRiskScore := math.Round(riskScore*100) / 100
 
 	// Récupére les données de description de l'entreprise de l'api externe de description
 	description, err := data.FetchCompanyDescription(apiKey, symbol)

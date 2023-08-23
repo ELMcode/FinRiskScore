@@ -7,12 +7,12 @@ import (
 
 func CalculateRiskScore(financialData []data.FinancialData) float64 {
 
-	// Sélectionne la dernière entrée des données financières (la plus récente)
 	if len(financialData) == 0 {
 		fmt.Println("No financial data found.")
 		return 0.0
 	}
 
+	// Sélectionne la dernière entrée des données financières (la plus récente)
 	fdata := financialData[0]
 
 	// ratio de rentabilité (Net Profit Margin) - inversé
